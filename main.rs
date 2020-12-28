@@ -1,5 +1,6 @@
 mod notes;
 mod stream;
+mod ui;
 
 fn main() {
     println!("Starting stream");
