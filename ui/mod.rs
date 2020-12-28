@@ -3,12 +3,13 @@ use gtk::{Box as GtkBox, Label, Orientation, Window, WindowType};
 
 pub struct UI {
     label: Label,
-    window: Window,
+    layout: GtkBox,
 }
 
 impl UI {
     pub fn new() -> Self {
         if gtk::init().is_err() {
+            // TODO: Better error handling
             panic!("Failed to initialize GTK.");
         }
 
@@ -21,20 +22,20 @@ impl UI {
             Inhibit(false)
         });
 
-        let label = Label::new(Some("D#"));
+        let label = Label::new(Some("Welcome"));
 
         // Create a VBox with 10px spacing
-        let bx = GtkBox::new(Orientation::Vertical, 10);
-        bx.pack_start(&label, false, false, 0);
-        window.add(&bx);
+        let layout = GtkBox::new(Orientation::Vertical, 10);
+        layout.pack_start(&label, false, false, 0);
+        window.add(&layout);
         window.show_all();
 
-        Self { window, label }
+        Self { layout, label }
     }
 
     pub fn render(&self, note: &str) {
         self.label.set_label(note);
-        self.window.show_all();
+        self.layout.show_all();
     }
 
     pub fn start(&self) {
